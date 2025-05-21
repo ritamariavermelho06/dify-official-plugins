@@ -22,3 +22,13 @@ class OpenAITextEmbeddingModel(OAICompatEmbeddingModel):
             )
 
         return entity
+
+    # remove user parameter for embedding models
+    def _prepare_embedding_payload(self, **kwargs):
+        """
+        Prepare embedding payload and remove user parameter for embedding models
+        """
+        payload = super()._prepare_embedding_payload(**kwargs)
+        if 'user' in payload:
+            del payload['user']
+        return payload
